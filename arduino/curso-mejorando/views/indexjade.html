@@ -1,0 +1,384 @@
+doctype html
+header#header
+  #logo-group
+    span#logo
+          img(src='/smart-admin/img/logo.png', alt='SmartAdmin')
+          link(rel='stylesheet', type='text/css', media='screen', href='/smart-admin/css/bootstrap.min.css')
+          link(rel='stylesheet', type='text/css', media='screen', href='/smart-admin/css/font-awesome.min.css')
+          link(rel='stylesheet', type='text/css', media='screen', href='/smart-admin/css/smartadmin-production.css')
+          link(rel='stylesheet', type='text/css', media='screen', href='/smart-admin/css/smartadmin-skins.css')
+          link(rel='stylesheet', type='text/css', media='screen', href='/smart-admin/css/demo.css')
+          link(rel='shortcut icon', href='/smart-admin/img/favicon/favicon.ico', type='image/x-icon')
+          link(rel='icon', href='/smart-admin/img/favicon/favicon.ico', type='image/x-icon')
+          link(rel='shortcut icon', href='/smart-admin/img/favicon/favicon.ico', type='image/x-icon') 
+          link(rel='icon', href='/smart-admin/img/favicon/favicon.ico', type='image/x-icon')
+          link(rel='icon', href='/smart-admin/css/demo.css', type='image/x-icon')
+          link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700')
+          script(src="jquery-1.10.2.js")
+          script(src='/smart-admin/js/bootstrap/bootstrap.min.js')
+          script(src='/smart-admin/js/notification/SmartNotification.min.js')
+          script(src='/smart-admin/js/smartwidgets/jarvis.widget.min.js')
+          script(src='/smart-admin/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js')
+          script(src='/smart-admin/js/plugin/sparkline/jquery.sparkline.min.js')
+          script(src='/smart-admin/js/plugin/jquery-validate/jquery.validate.min.js')
+          script(src='/smart-admin/js/plugin/masked-input/jquery.maskedinput.min.js')
+          script(src='/smart-admin/js/plugin/select2/select2.min.js')
+          script(src='/smart-admin/js/plugin/bootstrap-slider/bootstrap-slider.min.js')
+          script(src='/smart-admin/js/plugin/msie-fix/jquery.mb.browser.min.js')
+          script(src='/smart-admin/js/plugin/colorpicker/bootstrap-colorpicker.min.js')
+          script(src='/smart-admin/js/plugin/fastclick/fastclick.js')
+          script(src='/smart-admin/js/demo.js')
+          script(src='/smart-admin/js/app.js')
+          script(src="socket.io/socket.io.js")
+          script(src="estadoServer.js")
+          script(src="main.js")
+          script(src="grid.js")
+     title  
+      | Jade
+      body
+    span#activity.activity-dropdown
+      i.fa.fa-user
+      b.badge  21 
+    .ajax-dropdown
+      .btn-group.btn-group-justified(data-toggle='buttons')
+        label.btn.btn-default
+          | Msgs (14)
+        label.btn.btn-default
+          | notify (3)
+        label.btn.btn-default
+          | Tasks (4)
+      .ajax-notifications.custom-scroll
+        .alert.alert-transparent
+          h4 Click a button to show messages here
+          | This blank page message helps protect your privacy, or you can show the first message here automatically.
+        i.fa.fa-lock.fa-4x.fa-border
+      span
+        | Last updated on: 12/12/2013 9:43AM
+        button.btn.btn-xs.btn-default.pull-right(type='button', data-loading-text='<i class="fa fa-refresh fa-spin"></i> Loading...')
+          i.fa.fa-refresh
+  #project-context
+    span.label Projects:
+    span#project-selector.popover-trigger-element.dropdown-toggle(data-toggle='dropdown')
+      | Recent projects
+      i.fa.fa-angle-down
+    ul.dropdown-menu
+      li
+        a(href='javascript:void(0);') Online e-merchant management system - attaching integration with the iOS
+      li
+        a(href='javascript:void(0);') Notes on pipeline upgradee
+      li
+        a(href='javascript:void(0);') Assesment Report for merchant account
+      li.divider
+      li
+        a(href='javascript:void(0);')
+          i.fa.fa-power-off
+          | Clear
+  .pull-right
+    #hide-menu.btn-header.pull-right
+      span
+        a(href='javascript:void(0);', title='Collapse Menu')
+          i.fa.fa-reorder
+    ul.header-dropdown-list.hidden-xs
+      li
+        a.dropdown-toggle(href='#', data-toggle='dropdown')
+          img(alt='', src='/smart-admin/img/flags/ecu.png')
+          span.username
+        ul.dropdown-menu.pull-right
+    #search-mobile.btn-header.transparent.pull-right
+      span
+        a(href='javascript:void(0)', title='Search')
+          i.fa.fa-search
+aside#left-panel
+  .login-info
+    span
+      a#show-shortcut(href='javascript:void(0);')
+        img.online(src='/smart-admin/img/avatars/sunny.png', alt='me')
+        span
+          | SISTEMA
+        i.fa.fa-angle-down
+  nav
+        ul
+          li.active
+            a(href='index.html', title='Dashboard')
+              i.fa.fa-lg.fa-fw.fa-home
+              span.menu-item-parent Dashboard
+          li
+            a(href='inbox.html')
+              i.fa.fa-lg.fa-fw.fa-inbox
+              span.menu-item-parent Inbox
+              span.badge.pull-right.inbox-badge 14
+          li
+            a(href='#')
+              i.fa.fa-lg.fa-fw.fa-bar-chart-o
+              span.menu-item-parent Graphs
+            ul
+              li
+                a(href='flot.html') Flot Chart
+              li
+                a(href='morris.html') Morris Charts
+              li
+                a(href='inline-charts.html') Inline Charts
+          li
+            a(href='#')
+              i.fa.fa-lg.fa-fw.fa-table
+              span.menu-item-parent Tables
+            ul
+              li
+                a(href='table.html') Normal Tables
+              li
+                a(href='datatables.html') Data Tables
+          li
+            a(href='#')
+              i.fa.fa-lg.fa-fw.fa-pencil-square-o
+              span.menu-item-parent Forms
+            ul
+              li
+                a(href='form-elements.html') Smart Form Elements
+              li
+                a(href='form-templates.html') Smart Form Layouts
+              li
+                a(href='validation.html') Smart Form Validation
+              li
+                a(href='bootstrap-forms.html') Bootstrap Form Elements
+              li
+                a(href='plugins.html') Form Plugins
+              li
+                a(href='wizard.html') Wizards
+              li
+                a(href='other-editors.html') Bootstrap Editors
+              li
+                a(href='dropzone.html')
+                  | Dropzone
+                  span.badge.pull-right.inbox-badge.bg-color-yellow new
+          li
+            a(href='#')
+              i.fa.fa-lg.fa-fw.fa-desktop
+              span.menu-item-parent UI Elements
+            ul
+              li
+                a(href='general-elements.html') General Elements
+              li
+                a(href='buttons.html') Buttons
+              li
+                a(href='#') Icons
+                ul
+                  li
+                    a(href='fa.html')
+                      i.fa.fa-plane
+                      | Font Awesome
+                  li
+                    a(href='glyph.html')
+                      i.glyphicon.glyphicon-plane
+                      | Glyph Icons
+              li
+                a(href='grid.html') Grid
+              li
+                a(href='treeview.html') Tree View
+              li
+                a(href='nestable-list.html') Nestable Lists
+              li
+                a(href='jqui.html') JQuery UI
+          li
+            a(href='#')
+              i.fa.fa-lg.fa-fw.fa-folder-open
+              span.menu-item-parent 6 Level Navigation
+            ul
+              li
+                a(href='#')
+                  i.fa.fa-fw.fa-folder-open
+                  | 2nd Level
+                ul
+                  li
+                    a(href='#')
+                      i.fa.fa-fw.fa-folder-open
+                      | 3ed Level
+                    ul
+                      li
+                        a(href='#')
+                          i.fa.fa-fw.fa-file-text
+                          | File
+                      li
+                        a(href='#')
+                          i.fa.fa-fw.fa-folder-open
+                          | 4th Level
+                        ul
+                          li
+                            a(href='#')
+                              i.fa.fa-fw.fa-file-text
+                              | File
+                          li
+                            a(href='#')
+                              i.fa.fa-fw.fa-folder-open
+                              | 5th Level
+                            ul
+                              li
+                                a(href='#')
+                                  i.fa.fa-fw.fa-file-text
+                                  | File
+                              li
+                                a(href='#')
+                                  i.fa.fa-fw.fa-file-text
+                                  | File
+              li
+                a(href='#')
+                  i.fa.fa-fw.fa-folder-open
+                  | Folder
+                ul
+                  li
+                    a(href='#')
+                      i.fa.fa-fw.fa-folder-open
+                      | 3ed Level
+                    ul
+                      li
+                        a(href='#')
+                          i.fa.fa-fw.fa-file-text
+                          | File
+                      li
+                        a(href='#')
+                          i.fa.fa-fw.fa-file-text
+                          | File
+          li
+            a(href='calendar.html')
+              i.fa.fa-lg.fa-fw.fa-calendar
+                em 3
+              span.menu-item-parent Calendar
+          li
+            a(href='widgets.html')
+              i.fa.fa-lg.fa-fw.fa-list-alt
+              span.menu-item-parent Widgets
+          li
+            a(href='gallery.html')
+              i.fa.fa-lg.fa-fw.fa-picture-o
+              span.menu-item-parent Gallery
+          li
+            a(href='gmap-xml.html')
+              i.fa.fa-lg.fa-fw.fa-map-marker
+              span.menu-item-parent Google Map Skins
+              span.badge.bg-color-greenLight.pull-right.inbox-badge 9
+          li
+            a(href='#')
+              i.fa.fa-lg.fa-fw.fa-windows
+              span.menu-item-parent Miscellaneous
+            ul
+              li
+                a(href='typography.html') Typography
+              li
+                a(href='pricing-table.html') Pricing Tables
+              li
+                a(href='invoice.html') Invoice
+              li
+                a(href='login.html', target='_top') Login
+              li
+                a(href='register.html', target='_top') Register
+              li
+                a(href='lock.html', target='_top') Locked Screen
+              li
+                a(href='error404.html') Error 404
+              li
+                a(href='error500.html') Error 500
+              li
+                a(href='blank_.html') Blank Page
+              li
+                a(href='email-template.html') Email Template
+              li
+                a(href='search.html') Search Page
+              li
+                a(href='ckeditor.html') CK Editor
+          li
+            a(href='#')
+              i.fa.fa-lg.fa-fw.fa-file
+              span.menu-item-parent Other Pages
+            ul
+              li
+                a(href='forum.html') Forum Layout
+              li
+                a(href='profile.html') Profile
+              li
+                a(href='timeline.html') Timeline
+  span.minifyme
+    i.fa.fa-arrow-circle-left.hit
+#main(role='main')
+  #ribbon
+    span.ribbon-button-alignment
+      span#refresh.btn.btn-ribbon(data-title='refresh', rel='tooltip', data-placement='bottom', data-original-title='<i class="text-warning fa fa-warning"></i> Warning! This will reset all your widget settings.', data-html='true')
+        i.fa.fa-refresh
+    ol.breadcrumb
+      li Home
+      li Dashboard
+  #content
+        div.row
+            section#widget-grid
+               h1 Ejemplo del curso
+               p https://gist.github.com/Siedrix/6903519
+               p
+               | Color:
+               input#color(type='text', value='#000000')
+               #grid
+    
+        div.row
+            h1= title
+            #disconected
+              p Desconectado!
+            #connected.hide
+              p Conectado!
+            h2#pulsaciones Has pulsado 0 veces!
+            input(type='button', value='Enviar pulsación')#button.btn.btn-primary
+            input(type='button',value='Clic')#mostrar.btn.btn-default
+                                   
+            span.onoffswitch
+              input#servidor_active.onoffswitch-checkbox(type='checkbox', name='onoffswitch', checked='checked')
+              label.onoffswitch-label(for='servidor_active')
+                span.onoffswitch-inner(data-swchon-text='YES', data-swchoff-text='NO')
+                span.onoffswitch-switch
+        div.row
+          section.col.col-7
+                form.smart-form
+                                 header
+                                   | Chatear
+                                 |                         
+                                 fieldset
+                                   section
+                                     label.label Extra Small text input
+                                     |                                 
+                                     label.input
+                                       input.input-xs(type='text')
+                                 |                         
+                                 fieldset
+                                   section
+                                     label.label Columned radios
+                                     |                                 
+                                     .row
+                                       .col.col-4
+                                         label.radio
+                                           input(type='radio', name='radio', checked='checked')
+                                           |                                             
+                                           i
+                                           | Alexandra
+                                   |                             
+                                   section
+                                     label.label Inline radios (disabled)
+                                     |                                 
+                                     .inline-group
+                                       label.radio
+                                         input(type='radio', name='radio-inline', checked='checked')
+                                         |                                         
+                                         i
+                                         | Alexandra
+                                 |                         
+                                 fieldset
+                                   .row
+                                     section.col.col-5
+                                       label.label Radio Toggles (disabled)
+                                       |                                     
+                                       label.toggle
+                                         input(type='checkbox', name='checkbox-toggle', checked='checked')
+                                         i(data-swchon-text='ON', data-swchoff-text='OFF')
+                                         | Servidor 
+                                 |                         
+                                 footer
+                                   button.btn.btn-primary(type='submit')
+                                     | Submit
+                                   |                             
+                                   button.btn.btn-default(type='button', onclick='window.history.back();')
+                                     | Back
+

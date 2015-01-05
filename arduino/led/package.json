@@ -1,0 +1,10 @@
+{
+    "name": "arduino",
+    "version": "0.0.1",
+    "author": "Migu3ln",
+    "dependencies": {
+        "socket.io": ">=0.9.13",
+        "johnny-five": "*"
+    }
+
+}

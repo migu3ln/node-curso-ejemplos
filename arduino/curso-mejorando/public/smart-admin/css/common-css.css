@@ -1,0 +1,21 @@
+
+
+/*.empty-portlet {
+    display: block;
+    padding-top: 25px;
+    padding-right: 75px;
+    padding-bottom: 25px;
+    padding-left: 75px;
+}
+
+.empty-portlet i {
+    font-size: 100px;
+}*/
+.empty-portlet {
+    display: block;
+    padding: 15px;
+}
+
+.empty-portlet i {
+    font-size: 50px;
+}
