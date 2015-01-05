@@ -5,10 +5,7 @@ var express = require('express'),
         io = require('socket.io').listen(server, {
     'log level': 2
 });
-var five = require("johnny-five"),
-        board, led;
 
-board = new five.Board();
 
 server.listen(3000);
 app.engine('.html', require('ejs').renderFile);//definir motor d plantillas 
@@ -60,27 +57,39 @@ var comprobarTablero = function(tablero) {
 };
 var clicks = 0;
 
-var LEDPIN = 13;
-var OUTPUT = 1;
 
 
 function prenderLed() {
-    console.log("ss");
-    board.on("ready", function() {
-        var val = 0;
-        // Set pin 13 to OUTPUT mode
-        this.pinMode(LEDPIN, OUTPUT);
-        // Create a loop to "flash/blink/strobe" an led
-        this.loop(100, function() {
-            this.digitalWrite(LEDPIN, (val = val ? 0 : 1));
+//    console.log("ss");
+    try {
+        var LEDPIN = 13;
+        var OUTPUT = 1;
+        var five = require("johnny-five"),
+                board, led;
+
+        board = new five.Board();
+        board.on("ready", function() {
+            var val = 0;
+            // Set pin 13 to OUTPUT mode
+            this.pinMode(LEDPIN, OUTPUT);
+            // Create a loop to "flash/blink/strobe" an led
+            this.loop(100, function() {
+                this.digitalWrite(LEDPIN, (val = val ? 0 : 1));
+            });
+            console.log("conectado a la placa");
         });
-        console.log("conectado a la placa");
-    });
+    } catch (e) {
+        console.log("conecte la placa", e);
+    }
+
+
 
 }
 //Al conectarse un usuario
 io.sockets.on('connection', function(socket) {
-    prenderLed();
+//    prenderLed();
+
+
     var desconectarAmbosJugadores = function() {
         jugadores = [];
         tablero = ['', '', '', '', '', '', '', '', ''];
@@ -231,14 +240,23 @@ io.sockets.on('connection', function(socket) {
     });
 });
 function on_OffLed(encender) {
+    info = {};
+    if (encender) {
+        info = {encender: encender};
+    }
+    else {
+        info = {encender: encender};
+
+    }
     // Create a standard `led` on pin 13
-    led = new five.Led(13);
-    pingMode(led, OUTPUT);
-    digitalWrite(led, HIGH);
-    delay(1000);
-    digitalWrite(led, LOW);
-    delay(1000);
+//    led = new five.Led(13);
+//    pingMode(led, OUTPUT);
+//    digitalWrite(led, HIGH);
+//    delay(1000);
+//    digitalWrite(led, LOW);
+//    delay(1000);
     // "strobe" the led in 100ms on-off phases
+    return info;
 }
 function ApagarPrender(encender) {
     console.log("apagar prender");
