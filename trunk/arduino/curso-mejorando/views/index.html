@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <style>
+
+            #latencia {
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                color: #00000;
+                font-size: 10px;
+
+                span {
+                    font-style: italic;
+                }
+            }
+
+            #login {
+                width: 200px;
+                min-height: 100px;
+                border: 1px solid #c0c0c0;
+                border-radius: 7px;
+                background-image: url('/juego/img/bg-azul.png');
+                background-image: url(img/bg-azul.png);
+                text-align: center;
+                margin: auto;
+                margin-top: 250px;
+
+                input[type="text"] {
+                    border: 1px solid #000;
+                    outline: none;
+                    width: 170px;
+                    height: 20px;
+                    font-style: italic;
+                }
+
+                p.error {
+                    color: red;
+                    font-size: 12px;
+                    font-style: italic;
+                }
+            }
+            #minicontenedor {
+                width: 620px;
+                margin: auto;
+                height: 400px;
+
+                #tablero {
+                    float: left;
+                    width: 396px;
+                    height: 396px;
+                    border: 2px solid #000;
+
+                    .fila {
+                        width: 396px;
+                        height: 132px;
+
+                        .columna {
+                            width: 130px;
+                            height: 130px;
+                            font-size: 30px;
+                            float: left;
+                            border: 1px solid #c0c0c0;
+                            background-color:  #0000FF;
+                            cursor: pointer;
+                            font-size: 120px;
+                            text-align: center;
+                            vertical-align: middle;
+
+                            &:hover {
+                                background-color:#7FB321;
+                                border: 1px;
+                            };
+                        }
+                    }
+                }
+
+                #jugadores {
+                    width: 198px;
+                    height: 120px;
+                    float: left;
+                    margin-left: 20px;
+                    border: 1px solid #000;
+
+                    .estado {
+                        width: 198px;
+                        height: 39px;
+                        border-bottom: 1px solid #000;
+                        /*.gradiante( #c0c0c0, lighten(#c0c0c0, 15%));*/
+
+                        .figura {
+                            float: left;
+                            width: 44px;
+                            height: 31px;
+                            text-align: center;
+                            padding: 5px 0px 3px 0px;
+                            background-color: #c0c0c0;
+                            border-right: 1px solid #000;
+                            font-size: 28px;
+                            font-weight: bold;
+
+                            //Cuando se conecta un jugador
+                            &.bg-verde {
+                                background-color: #7FB321;
+                            }
+                        }
+
+                        .nombre {
+                            float: left;
+                            width: 146px;
+                            height: 29px;
+                            padding: 5px 2px 5px 5px;
+                            font-size: 13px;
+
+                            //Cuando es el turno del jugador
+                            /*                            &.turno-verde {
+                                                            .gradiante( #7FB321, #fff);
+                                                        }*/
+
+                        }
+                    }
+
+                    /*                    #unirse {
+                                            width: 100%;
+                                            height: 30px;
+                                            font-size: 20px;
+                                            padding: 10px 0px 0px 0px;
+                                            border: none;
+                                            text-align: center;
+                                            .gradiante( #c0c0c0, #fff);
+                    
+                                            &:hover {
+                                                .gradiante( #fff, #c0c0c0);
+                                                font-weight: bold;
+                                            }
+                    
+                                            &.completo:hover {
+                                                .gradiante( orange, #fff);
+                                            }
+                                        }*/
+                }
+
+
+            }
+        </style>
+        <meta charset="utf-8">
+        <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
+
+        <title>Practicas</title>
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <!-- Basic Styles -->
+        <link rel="stylesheet" type="text/css" media="screen" href="/smart-admin/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/smart-admin/css/font-awesome.min.css">
+
+        <!-- SmartAdmin Styles : Please note (smartadmin-production.css) was created using LESS variables -->
+        <link rel="stylesheet" type="text/css" media="screen" href="/smart-admin/css/smartadmin-production.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/smart-admin/css/smartadmin-skins.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/smart-admin/css/common-css.css">
+        <!-- ladda submit -->
+        <link href="/smart-admin/css/ladda-themeless.min.css" rel="stylesheet">
+
+        <!-- SmartAdmin RTL Support is under construction
+        <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.css"> -->
+
+        <!-- We recommend you use "your_style.css" to override SmartAdmin
+             specific styles this will also ensure you retrain your customization with each SmartAdmin update.
+        <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
+
+        <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
+        <link rel="stylesheet" type="text/css" media="screen" href="/smart-admin/css/demo.css">
+
+        <!-- FAVICONS -->
+        <link rel="shortcut icon" href="/smart-admin/img/favicon/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/smart-admin/img/favicon/favicon.ico" type="image/x-icon">
+        <!-- GOOGLE FONT -->
+        <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">-->
+
+        <link rel="/juego/stylesheet/less" type="text/css" href="style.less">
+
+
+    </head>
+    <body class="fixed-header mobile-view-activated fixed-ribbon fixed-navigation">
+        <!-- possible classes: minified, fixed-ribbon, fixed-header, fixed-width-->
+
+        <!-- HEADER -->
+        <header id="header">
+            <div id="logo-group">
+
+                <!-- PLACE YOUR LOGO HERE -->
+                <span id="logo"> <img src="/smart-admin/img/logo.png" alt="SmartAdmin"> </span>
+                <!-- END LOGO PLACEHOLDER -->
+
+                <!-- Note: The activity badge color changes when clicked and resets the number to 0
+                Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
+                <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 21 </b> </span>
+
+                <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
+                <div class="ajax-dropdown">
+
+                    <!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="radio" name="activity" id="ajax/notify/mail.html">
+                            Msgs (14) </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="activity" id="ajax/notify/notifications.html">
+                            notify (3) </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="activity" id="ajax/notify/tasks.html">
+                            Tasks (4) </label>
+                    </div>
+
+                    <!-- notification content -->
+                    <div class="ajax-notifications custom-scroll">
+
+                        <div class="alert alert-transparent">
+                            <h4>Click a button to show messages here</h4>
+                            This blank page message helps protect your privacy, or you can show the first message here automatically.
+                        </div>
+
+                        <i class="fa fa-lock fa-4x fa-border"></i>
+
+                    </div>
+                    <!-- end notification content -->
+
+                    <!-- footer: refresh area -->
+                    <span> Last updated on: 12/12/2013 9:43AM
+                        <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
+                            <i class="fa fa-refresh"></i>
+                        </button> </span>
+                    <!-- end footer -->
+
+                </div>
+                <!-- END AJAX-DROPDOWN -->
+            </div>
+
+            <!-- projects dropdown -->
+            <div id="project-context">
+
+                <span class="label">Projects:</span>
+                <span id="project-selector" class="popover-trigger-element dropdown-toggle" data-toggle="dropdown">Recent projects <i class="fa fa-angle-down"></i></span>
+
+                <!-- Suggestion: populate this list with fetch and push technique -->
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="javascript:void(0);">Online e-merchant management system - attaching integration with the iOS</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);">Notes on pipeline upgradee</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);">Assesment Report for merchant account</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Clear</a>
+                    </li>
+                </ul>
+                <!-- end dropdown-menu-->
+
+            </div>
+            <!-- end projects dropdown -->
+
+            <!-- pulled right: nav area -->
+            <div class="pull-right">
+
+                <!-- collapse menu button -->
+                <div id="hide-menu" class="btn-header pull-right">
+                    <span> <a href="javascript:void(0);" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+                </div>
+
+                <ul class="header-dropdown-list hidden-xs">
+                    <li>
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                            <img alt="" src="/smart-admin/img/flags/ecu.png"> 
+
+                            <span class="username">Usuario</span>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- end logout button -->
+
+                <!-- search mobile button (this is hidden till mobile view port) -->
+                <div id="search-mobile" class="btn-header transparent pull-right">
+                    <span> <a href="javascript:void(0)" title="Search"><i class="fa fa-search"></i></a> </span>
+                </div>
+
+
+                <!-- end multiple lang -->
+            </div>
+            <!-- end pulled right: nav area -->
+
+        </header>
+        <!-- END HEADER -->
+
+        <!-- Left panel : Navigation area -->
+        <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+        <aside id="left-panel">
+
+            <!-- User info -->
+            <div class="login-info">
+                <span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
+
+                    <a href="javascript:void(0);" id="show-shortcut">
+                        <img src="/smart-admin/img/avatars/sunny.png" alt="me" class="online" /> 
+                        <span>
+                            SISTEMA 
+                        </span>
+                        <i class="fa fa-angle-down"></i>
+                    </a> 
+
+                </span>
+            </div>
+            <!-- end user info -->
+
+            <!-- NAVIGATION : This navigation is also responsive
+
+            -->
+            <nav>
+
+            </nav>
+            <span class="minifyme"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+
+        </aside>
+        <!-- END NAVIGATION -->
+
+        <!-- MAIN PANEL -->
+        <div id="main" role="main">
+
+            <!-- RIBBON -->
+            <div id="ribbon">
+                <span class="ribbon-button-alignment"> <span id="refresh" class="btn btn-ribbon" data-title="refresh"  rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true"><i class="fa fa-refresh"></i></span> </span>
+                <!-- breadcrumb -->
+                <ol class="breadcrumb">
+                    <li>Home</li><li>Dashboard</li>
+                </ol>
+            </div>
+            <!-- END RIBBON -->
+
+            <!-- MAIN CONTENT -->
+            <div id="content">
+
+                <div>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="options" id="apagar_foco" autocomplete="off" checked> Apagado
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="prender_foco" autocomplete="off"> Prender
+                        </label>
+
+                    </div>
+                </div>
+                <!--                <h1>Ejemplo del curso</h1>
+                                <p>https://gist.github.com/Siedrix/6903519</p><p>-->
+
+                Color:<input id="color" type="text" value="#000000">
+                <!--                <div id="grid">
+                
+                                </div>-->
+
+                <div id="latencia">Latencia: <span></span> segs.</div>
+
+                <div id="login-contenedor">
+                    <div id="login">
+                        <h3>¿Cual es tu nombre?</h3>
+                        <input type="text" name="nick" placeholder="..." maxlength="20">
+                        <p class="error"></p>
+                    </div>
+                </div>
+
+                <div id="contenedor">
+
+                    <h1 class="titulo">3 En Raya</h1>
+
+                    <div id="minicontenedor">
+                        <!--                        <div id="tablero">
+                                                    <div class="fila">
+                                                        <div class="columna"></div>
+                                                        <div class="columna"></div>
+                                                        <div class="columna"></div>
+                                                    </div>
+                                                    <div class="fila">
+                                                        <div class="columna"></div>
+                                                        <div class="columna"></div>
+                                                        <div class="columna"></div>
+                                                    </div>
+                                                    <div class="fila">
+                                                        <div class="columna"></div>
+                                                        <div class="columna"></div>
+                                                        <div class="columna"></div>
+                                                    </div>
+                                                </div>-->
+
+                        <div id="jugadores">
+                            <div class="estado" data-jugador="1">
+                                <div class="figura">X</div>
+                                <div class="nombre">Esperando jugador...</div>
+                            </div>
+                            <div class="estado" data-jugador="2">
+                                <div class="figura">O</div>
+                                <div class="nombre">Esperando jugador...</div>
+                            </div>
+                            <div id="unirse">
+                                Unirme
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chat">
+                        <div id="sala">
+                            <div class="texto">
+
+                            </div>
+                            <textarea placeholder="..."></textarea>
+                        </div>
+                        <div id="usuarios">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <!-- END MAIN PANEL -->
+        <!-- BOOTSTRAP JS -->
+        <script src="/smart-admin/js/jquery-1.10.2.js"></script>
+        <script src="/smart-admin/js/bootstrap/bootstrap.min.js"></script>
+
+        <!-- CUSTOM NOTIFICATION -->
+        <script src="/smart-admin/js/notification/SmartNotification.min.js"></script>
+
+        <!-- JARVIS WIDGETS -->
+        <script src="/smart-admin/js/smartwidgets/jarvis.widget.min.js"></script>
+
+        <!-- EASY PIE CHARTS -->
+        <script src="/smart-admin/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+
+        <!-- SPARKLINES -->
+        <script src="/smart-admin/js/plugin/sparkline/jquery.sparkline.min.js"></script>
+
+        <!-- JQUERY VALIDATE -->
+        <script src="/smart-admin/js/plugin/jquery-validate/jquery.validate.min.js"></script>
+
+        <!-- JQUERY MASKED INPUT -->
+        <script src="/smart-admin/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+
+        <!-- JQUERY SELECT2 INPUT -->
+        <script src="/smart-admin/js/plugin/select2/select2.min.js"></script>
+
+        <!-- JQUERY UI + Bootstrap Slider -->
+        <script src="/smart-admin/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+
+        <!-- browser msie issue fix -->
+        <script src="/smart-admin/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+
+        <!-- FastClick: For mobile devices -->
+        <script src="/smart-admin/js/plugin/fastclick/fastclick.js"></script>
+
+        <!--[if IE 7]>
+        
+        <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
+        
+        <![endif]-->
+
+        <!-- Demo purpose only -->
+        <script src="/smart-admin/js/demo.js"></script>
+
+        <!-- MAIN APP JS FILE -->
+        <script src="/smart-admin/js/app.js"></script>
+
+        <!-- PAGE RELATED PLUGIN(S) -->
+        <script src="/smart-admin/js/plugin/superbox/superbox.min.js"></script>
+        <!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip -->
+        <script src="/smart-admin/js/plugin/flot/jquery.flot.cust.js"></script>
+        <script src="/smart-admin/js/plugin/flot/jquery.flot.resize.js"></script>
+        <script src="/smart-admin/js/plugin/flot/jquery.flot.tooltip.js"></script>
+
+        <!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
+        <script src="/smart-admin/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="/smart-admin/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="/smart-admin/js/plugin/colorpicker/bootstrap-colorpicker.min.js"></script>
+
+        <!-- Full Calendar -->
+        <script src="/smart-admin/js/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
+        <script src="/smart-admin/js/plugin/superbox/superbox.min.js"></script>
+        <script src="/smart-admin/js/jquery.validateAjax.js"></script>
+        <script src="/smart-admin/js/common-scripts.js"></script>
+        <!-- ladda submit -->
+        <script src="/smart-admin/js/spin.min.js"></script>
+        <script src="/smart-admin/js/ladda.min.js"></script>
+        <script src="/smart-admin/js/ladda.jquery.min.js"></script>
+        <script src="socket.io/socket.io.js"></script>
+        <script src="/juego/js/less-1.3.3.min.js"></script>
+        <script src="/juego/js/core.js"></script>
+        <script src="/estadoServer.js"></script>
+        <script src="/main.js"></script>
+        <script src="/grid.js"></script>
+
+        <script>
+            $(document).ready(function() {
+
+                // DO NOT REMOVE : GLOBAL FUNCTIONS!
+                pageSetUp();
+                $('.superbox').SuperBox();
+                /*
+                 * PAGE RELATED SCRIPTS
+                 */
+
+                $(".js-status-update a").click(function() {
+                    var selText = $(this).text();
+                    var $this = $(this);
+                    $this.parents('.btn-group').find('.dropdown-toggle').html(selText + ' <span class="caret"></span>');
+                    $this.parents('.dropdown-menu').find('li').removeClass('active');
+                    $this.parent().addClass('active');
+                });
+
+                data_array = {
+                    "US": 4977,
+                    "AU": 4873,
+                    "IN": 3671,
+                    "BR": 2476,
+                    "TR": 1476,
+                    "CN": 146,
+                    "CA": 134,
+                    "BD": 100
+                };
+            });
+
+        </script>
+
+
+    </body>
+
+</html>
