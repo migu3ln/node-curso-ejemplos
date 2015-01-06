@@ -49,13 +49,15 @@ jQuery(document).ready(function() {
             if (nombre !== '') {
                 $(this).attr({'disabled': 'disabled'});
                 socket.emit('comprobarUsuario', nombre, function(data) {
-
+                    console.log(data);
                     //Si no es valido el nombre se muestra un mensaje de error
                     if (!data.ok) {
+
+
                         $('#login p.error').html(data.msg);
                         $('#login input[type=text]').removeAttr('disabled');
                     } else {
-
+                        console.log("conectado");
                         //Si es correcto ocultamos el panel de login y asignamos el foco en el chat
                         nick = data.nick;
                         $('#login-contenedor').slideUp('slow');
@@ -69,14 +71,14 @@ jQuery(document).ready(function() {
         }
 
     });
-
+    socket.on('mostrarInfo', function(data) {
+        viewHighcarts("#pieIncidenciaProductos", data);
+    });
     //Enviamos a todos los clientes la lista de usuarios actualizada y el anuncio de el nuevo usuario
     socket.on('nuevoUsuario', function(data) {
         mensajeSistema('conexion', data.nick);
         usuarios = data.listaUsuarios;
-
         actualizarUsuarios(usuarios);
-
     });
 
     //Al desconectarse un usuario avisamos al resto mediante el chat y actualizamos la lista
@@ -121,8 +123,9 @@ jQuery(document).ready(function() {
 
             if (msg !== '') {
                 $(this).val('');
-
+                console.log("al nviar l msj");
                 socket.emit('msg', {nombre: nick, 'msg': msg});
+                socket.emit('mostrarInfo', {mostrar: false});
 
             }
         }
@@ -207,6 +210,7 @@ jQuery(document).ready(function() {
         mensajeSistema('chat', data);
     });
 
+
     //Actualizamos el tablero con los datos del servidor.
     var actualizarTablero = function(tablero) {
 
@@ -253,6 +257,9 @@ jQuery(document).ready(function() {
                 break;
             case 'jugador':
                 $('#chat .texto').append('<span class="frase naranja"> *' + datos.nick + '* es el Jugador ' + datos.jugador + '.</span>');
+                break;
+            case 'mostrarInfo':
+                $('.texto1').append('<span class="frase naranja"> *' + datos.info + '.</span>');
                 break;
 
         }

@@ -1,4 +1,15 @@
-
+$reporteData = {};
+function viewHighcarts(id_contenedor, data) {
+    console.log(data);
+    $reporteData = data;
+    if (data.cambiar.mostrar) {
+        $(id_contenedor).highcharts(data);
+    }
+    else {
+        $pieUsuarios = $(id_contenedor).highcharts();
+        $pieUsuarios.series[0].setData(data.series[0].data);
+    }
+}
 var main = function() {
     window.client = io.connect(window.location.href);
     var grid = new Grid();
@@ -14,32 +25,32 @@ var main = function() {
         $("#connected").toggleClass("hide");
     }
 
+    $otro = {"title": {"text": "Incidencias"}, "credits": {"enabled": false}, "chart": {"height": "400"}, "plotOptions": {"pie": {"allowPointSelect": true, "cursor": "pointer", "dataLabels": {"enabled": false, "format": "<b>{point.name}<\/b>: {point.percentage:.1f} %"}, "showInLegend": true, "tooltip": {"pointFormat": "Porcentaje: <b>{point.percentage:.1f}%<\/b><br>{series.name}: <b>{point.y}<\/b>"}}}, "series": [{"type": "pie", "name": "Incidencia Producto", "data": [["Estado de cuenta", 689], ["Fisura", 616]]}], "mostrar": true};
+//    viewHighcarts("pieIncidenciaProductos", data);
 //#3 Si estamos conectados, muestra el log y cambia el mensaje
     socket.on('connected', function() {
+//        viewHighcarts(data);
+        socket.emit('mostrarInfo', {mostrar: true});
         console.log('Conectado!');
         toggle();
     });
-
 //#4 Si pulsas el botón, envía el evento click
     $('#button').on('click', function() {
         socket.emit("click");
 //        socket.on('click');
     });
-
 //#5 El servidor nos responde al click con este evento y nos da el número de clicks en el callback.
     socket.on('otherClick', function(clicks) {
         console.log('Click', clicks);
         $('#pulsaciones').html(" Numero de Clicks : " + clicks);
         $('#pulsaciones').replaceWith("<h2 id=pulsaciones> " + "Numero de Clicks : " + clicks + "</h2>");
     });
-
 //#6 Si nos desconectamos, muestra el log y cambia el mensaje.
     socket.on('disconnect', function() {
         console.log('Desconectado!');
         toggle();
     });
     $('#apagar_foco').on('change', function() {
-
         info = {prender: false};
         socket.emit('prender', info, function(data) {
             console.log(data);
@@ -48,16 +59,12 @@ var main = function() {
     });
     $('#prender_foco').on('change', function() {
         console.log("prender jq");
-
         info = {prender: true};
         socket.emit('prender', info, function(data) {
             console.log(data);
         });
     });
-
-
     pageSetUp();
-
     $(".js-status-update a").click(function() {
         var selText = $(this).text();
         var $this = $(this);
@@ -65,14 +72,11 @@ var main = function() {
         $this.parents('.dropdown-menu').find('li').removeClass('active');
         $this.parent().addClass('active');
     });
-
     $('.todo .checkbox > input[type="checkbox"]').click(function() {
         var $this = $(this).parent().parent().parent();
-
         if ($(this).prop('checked')) {
             $this.addClass("complete");
             $(this).parent().hide();
-
             $this.slideUp(500, function() {
                 $this.clone().prependTo("#sortable3").effect("highlight", {}, 800);
                 $this.remove();
@@ -88,16 +92,13 @@ var main = function() {
             var $this = $(this);
             $this.find(".num-of-tasks").text($this.next().find("li").size());
         });
-
     }
 
 
     var data = [], totalPoints = 200, $UpdatingChartColors = $("#updating-chart").css('color');
-
     function getRandomData() {
         if (data.length > 0)
             data = data.slice(1);
-
         while (data.length < totalPoints) {
             var prev = data.length > 0 ? data[data.length - 1] : 50;
             var y = prev + Math.random() * 10 - 5;
@@ -124,7 +125,6 @@ var main = function() {
         }
 
     });
-
     var options = {
         yaxis: {
             min: 0,
@@ -151,8 +151,6 @@ var main = function() {
             }
         }
     };
-
-
     $('input[type="checkbox"]#start_interval').click(function() {
         if ($(this).prop('checked')) {
             $on = true;
@@ -163,13 +161,11 @@ var main = function() {
             $on = false;
         }
     });
-
     function update() {
         if ($on == true) {
             plot.setData([getRandomData()]);
             plot.draw();
             setTimeout(update, updateInterval);
-
         } else {
             clearInterval(updateInterval)
         }
@@ -177,8 +173,6 @@ var main = function() {
     }
 
     var $on = false;
-
-
     $(function() {
         var twitter = [[1, 27], [2, 34], [3, 51], [4, 48], [5, 55], [6, 65], [7, 61], [8, 70], [9, 65], [10, 75], [11, 57], [12, 59], [13, 62]], facebook = [[1, 25], [2, 31], [3, 45], [4, 37], [5, 38], [6, 40], [7, 47], [8, 55], [9, 43], [10, 50], [11, 47], [12, 39], [13, 47]], data = [{
                 label: "Twitter",
@@ -217,7 +211,6 @@ var main = function() {
                     show: true
                 }
             }];
-
         var options = {
             grid: {
                 hoverable: true
@@ -233,14 +226,10 @@ var main = function() {
             yaxes: {
             }
         };
-
     });
-
-
     $(function() {
 
         var trgt = [[1354586000000, 153], [1364587000000, 658], [1374588000000, 198], [1384589000000, 663], [1394590000000, 801], [1404591000000, 1080], [1414592000000, 353], [1424593000000, 749], [1434594000000, 523], [1444595000000, 258], [1454596000000, 688], [1464597000000, 364]], prft = [[1354586000000, 53], [1364587000000, 65], [1374588000000, 98], [1384589000000, 83], [1394590000000, 980], [1404591000000, 808], [1414592000000, 720], [1424593000000, 674], [1434594000000, 23], [1444595000000, 79], [1454596000000, 88], [1464597000000, 36]], sgnups = [[1354586000000, 647], [1364587000000, 435], [1374588000000, 784], [1384589000000, 346], [1394590000000, 487], [1404591000000, 463], [1414592000000, 479], [1424593000000, 236], [1434594000000, 843], [1444595000000, 657], [1454596000000, 241], [1464597000000, 341]], toggles = $("#rev-toggles"), target = $("#flotcontainer");
-
         var data = [{
                 label: "Target Profit",
                 data: trgt,
@@ -292,9 +281,7 @@ var main = function() {
             }
 
         };
-
         plot2 = null;
-
         function plotNow() {
             var d = [];
             toggles.find(':checkbox').each(function() {
@@ -313,14 +300,12 @@ var main = function() {
 
         }
         ;
-
         toggles.find(':checkbox').on('change', function() {
             plotNow();
         });
         plotNow()
 
     });
-
     data_array = {
         "US": 4977,
         "AU": 4873,
@@ -331,14 +316,11 @@ var main = function() {
         "CA": 134,
         "BD": 100
     };
-
-
     if ($("#calendar").length) {
         var date = new Date();
         var d = date.getDate();
         var m = date.getMonth();
         var y = date.getFullYear();
-
         var calendar = $('#calendar').fullCalendar({
             editable: true,
             draggable: true,
@@ -422,12 +404,9 @@ var main = function() {
                 }
             }
         });
-
     }
     ;
-
     $('.fc-header-right, .fc-header-center').hide();
-
     $('#calendar-buttons #btn-prev').click(function() {
         $('.fc-button-prev').click();
         return false;
@@ -436,35 +415,27 @@ var main = function() {
         $('.fc-button-next').click();
         return false;
     });
-
     $('#calendar-buttons #btn-today').click(function() {
         $('.fc-button-today').click();
         return false;
     });
-
     $('#mt').click(function() {
         $('#calendar').fullCalendar('changeView', 'month');
     });
-
     $('#ag').click(function() {
         $('#calendar').fullCalendar('changeView', 'agendaWeek');
     });
-
     $('#td').click(function() {
         $('#calendar').fullCalendar('changeView', 'agendaDay');
     });
-
-
     $.filter_input = $('#filter-chat-list');
     $.chat_users_container = $('#chat-container > .chat-list-body')
     $.chat_users = $('#chat-users')
     $.chat_list_btn = $('#chat-container > .chat-list-open-close');
     $.chat_body = $('#chat-body');
-
     jQuery.expr[':'].Contains = function(a, i, m) {
         return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
     };
-
     function listFilter(list) {// header is any element, list is an unordered list
 
         $.filter_input.change(function() {
@@ -478,13 +449,10 @@ var main = function() {
             return false;
         }).keyup(function() {
             $(this).change();
-
         });
-
     }
 
     listFilter($.chat_users);
-
     $.chat_list_btn.click(function() {
         $(this).parent('#chat-container').toggleClass('open');
     })
@@ -493,13 +461,10 @@ var main = function() {
 
 };
 $(document).on('ready', main);
-
-
 $(document).ready(
         function() {
 
             pageSetUp();
-
             $(".js-status-update a").click(function() {
                 var selText = $(this).text();
                 var $this = $(this);
@@ -507,14 +472,11 @@ $(document).ready(
                 $this.parents('.dropdown-menu').find('li').removeClass('active');
                 $this.parent().addClass('active');
             });
-
             $('.todo .checkbox > input[type="checkbox"]').click(function() {
                 var $this = $(this).parent().parent().parent();
-
                 if ($(this).prop('checked')) {
                     $this.addClass("complete");
                     $(this).parent().hide();
-
                     $this.slideUp(500, function() {
                         $this.clone().prependTo("#sortable3").effect("highlight", {}, 800);
                         $this.remove();
@@ -530,16 +492,13 @@ $(document).ready(
                     var $this = $(this);
                     $this.find(".num-of-tasks").text($this.next().find("li").size());
                 });
-
             }
 
 
             var data = [], totalPoints = 200, $UpdatingChartColors = $("#updating-chart").css('color');
-
             function getRandomData() {
                 if (data.length > 0)
                     data = data.slice(1);
-
                 while (data.length < totalPoints) {
                     var prev = data.length > 0 ? data[data.length - 1] : 50;
                     var y = prev + Math.random() * 10 - 5;
@@ -566,7 +525,6 @@ $(document).ready(
                 }
 
             });
-
             var options = {
                 yaxis: {
                     min: 0,
@@ -593,7 +551,6 @@ $(document).ready(
                     }
                 }
             };
-
             $('input[type="checkbox"]#start_interval').click(function() {
                 if ($(this).prop('checked')) {
                     $on = true;
@@ -604,13 +561,11 @@ $(document).ready(
                     $on = false;
                 }
             });
-
             function update() {
                 if ($on == true) {
                     plot.setData([getRandomData()]);
                     plot.draw();
                     setTimeout(update, updateInterval);
-
                 } else {
                     clearInterval(updateInterval)
                 }
@@ -618,8 +573,6 @@ $(document).ready(
             }
 
             var $on = false;
-
-
             $(function() {
                 var twitter = [[1, 27], [2, 34], [3, 51], [4, 48], [5, 55], [6, 65], [7, 61], [8, 70], [9, 65], [10, 75], [11, 57], [12, 59], [13, 62]], facebook = [[1, 25], [2, 31], [3, 45], [4, 37], [5, 38], [6, 40], [7, 47], [8, 55], [9, 43], [10, 50], [11, 47], [12, 39], [13, 47]], data = [{
                         label: "Twitter",
@@ -658,7 +611,6 @@ $(document).ready(
                             show: true
                         }
                     }];
-
                 var options = {
                     grid: {
                         hoverable: true
@@ -674,14 +626,10 @@ $(document).ready(
                     yaxes: {
                     }
                 };
-
             });
-
-
             $(function() {
 
                 var trgt = [[1354586000000, 153], [1364587000000, 658], [1374588000000, 198], [1384589000000, 663], [1394590000000, 801], [1404591000000, 1080], [1414592000000, 353], [1424593000000, 749], [1434594000000, 523], [1444595000000, 258], [1454596000000, 688], [1464597000000, 364]], prft = [[1354586000000, 53], [1364587000000, 65], [1374588000000, 98], [1384589000000, 83], [1394590000000, 980], [1404591000000, 808], [1414592000000, 720], [1424593000000, 674], [1434594000000, 23], [1444595000000, 79], [1454596000000, 88], [1464597000000, 36]], sgnups = [[1354586000000, 647], [1364587000000, 435], [1374588000000, 784], [1384589000000, 346], [1394590000000, 487], [1404591000000, 463], [1414592000000, 479], [1424593000000, 236], [1434594000000, 843], [1444595000000, 657], [1454596000000, 241], [1464597000000, 341]], toggles = $("#rev-toggles"), target = $("#flotcontainer");
-
                 var data = [{
                         label: "Target Profit",
                         data: trgt,
@@ -733,9 +681,7 @@ $(document).ready(
                     }
 
                 };
-
                 plot2 = null;
-
                 function plotNow() {
                     var d = [];
                     toggles.find(':checkbox').each(function() {
@@ -754,14 +700,12 @@ $(document).ready(
 
                 }
                 ;
-
                 toggles.find(':checkbox').on('change', function() {
                     plotNow();
                 });
                 plotNow()
 
             });
-
             data_array = {
                 "US": 4977,
                 "AU": 4873,
@@ -772,8 +716,6 @@ $(document).ready(
                 "CA": 134,
                 "BD": 100
             };
-
-
             /*
              * FULL CALENDAR JS
              */
@@ -783,7 +725,6 @@ $(document).ready(
                 var d = date.getDate();
                 var m = date.getMonth();
                 var y = date.getFullYear();
-
                 var calendar = $('#calendar').fullCalendar({
                     editable: true,
                     draggable: true,
@@ -867,12 +808,9 @@ $(document).ready(
                         }
                     }
                 });
-
             }
             ;
-
             $('.fc-header-right, .fc-header-center').hide();
-
             $('#calendar-buttons #btn-prev').click(function() {
                 $('.fc-button-prev').click();
                 return false;
@@ -881,35 +819,27 @@ $(document).ready(
                 $('.fc-button-next').click();
                 return false;
             });
-
             $('#calendar-buttons #btn-today').click(function() {
                 $('.fc-button-today').click();
                 return false;
             });
-
             $('#mt').click(function() {
                 $('#calendar').fullCalendar('changeView', 'month');
             });
-
             $('#ag').click(function() {
                 $('#calendar').fullCalendar('changeView', 'agendaWeek');
             });
-
             $('#td').click(function() {
                 $('#calendar').fullCalendar('changeView', 'agendaDay');
             });
-
-
             $.filter_input = $('#filter-chat-list');
             $.chat_users_container = $('#chat-container > .chat-list-body')
             $.chat_users = $('#chat-users')
             $.chat_list_btn = $('#chat-container > .chat-list-open-close');
             $.chat_body = $('#chat-body');
-
             jQuery.expr[':'].Contains = function(a, i, m) {
                 return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
             };
-
             function listFilter(list) {// header is any element, list is an unordered list
 
                 $.filter_input.change(function() {
@@ -923,17 +853,13 @@ $(document).ready(
                     return false;
                 }).keyup(function() {
                     $(this).change();
-
                 });
-
             }
 
             listFilter($.chat_users);
-
             $.chat_list_btn.click(function() {
                 $(this).parent('#chat-container').toggleClass('open');
             });
-
 //            $('#color').colorpicker(
 //                    ).on('click', function() {
 //                $('#color').colorpicker('hide');
@@ -944,9 +870,7 @@ $(document).ready(
             $('#color').colorpicker().on('changeColor', function(ev) {
                 $('#color').colorpicker('hide');
                 bodyStyle.backgroundColor = ev.color.toHex();
-
             });
-
         }
 
 
