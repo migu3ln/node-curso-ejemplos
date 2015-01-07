@@ -3,18 +3,6 @@ console.log("ss");
 clicks = 0;
 io.sockets.on('connection', function(socket) {
     console.log("conectado");
-//
-//    socket.on('prender', function(data, callback) {
-//        console.log("prender");
-//        //Comprobamos que el nombre no esta en uso, o contiene caracteres raros.
-//        if (data.prender) {
-//            callback(on_OffLed(data.prender));
-//        }
-//        else {
-//            callback(on_OffLed(data.prender));
-//        }
-//
-//    });
     //Emitimos nuestro evento connected
     //Devolvemos el ping con los milisegundos al cliente para que pueda calcular la latencia.
     socket.on('ping', function(data, callback) {
@@ -22,6 +10,17 @@ io.sockets.on('connection', function(socket) {
             callback(data);
         }
     });
+    //Si llega un mensaje del chat de un usuario lo limpiamos y reenviamos a todos los demás.
+    socket.on('msg', function(data) {
+        io.sockets.emit('msg', data);
+    });
+
+    socket.on('mostrarInfo', function(data) {
+        console.log("data", data);
+        console.log("clicks" + clicks);
+        io.sockets.emit('mostrarInfo', clicks);
+    }
+    );
     socket.emit('connected');
     //Permanecemos a la escucha del evento click
     socket.on('click', function() {
