@@ -1,0 +1,18 @@
+extends ../layout
+
+
+block body
+
+    h1= 'Crear '+model.label.simple
+    form(method='POST',id=model.tableName+'-form',action='/chat_users/create')
+        .form-group
+            label(for=model.attributes.name.columnName)= model.attributesLabels.name
+            input.form-control(type='text',id=model.tableName+'_'+model.attributes.name.columnName,name=model.tableName+'['+model.attributes.name.columnName+']')
+        .form-group
+            label(for=model.attributes.passwd.columnName)= model.attributesLabels.passwd
+            input.form-control(type='text',id=model.tableName+'_'+model.attributes.passwd.columnName,name=model.tableName+'['+model.attributes.passwd.columnName+']')
+        input(type='submit',class='btn btn-info')
+
+
+
+
