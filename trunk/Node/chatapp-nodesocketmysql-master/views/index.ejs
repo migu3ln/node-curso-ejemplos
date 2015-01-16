@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+   <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Bottle Message</title>
+    <link rel='stylessheet'  href='stylesheets/normalize.min.css' />
+    <link rel='stylesheet' href='stylesheets/style.css' />
+   
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+ 
+  </head>
+  <body>
+    <h1>Bottle Message</h1>
+    <form method='post'>
+    <input id='msg' autocomplete='off' autofocus/>
+    <button type='submit'>Send</button>
+    </form>
+     <div id="mensajes">
+  <ul id="messages">
+        <% for(var i=0; i < messages.length; i++) { %>
+          <li>
+            <div class="header clearfix">
+              <div class="who"><%= messages[i].nickname %></div>
+              <div class="when"><%= messages[i].when %></div>
+            </div>
+            <div class="msg">
+              <%= messages[i].msg %>
+            </div>
+          </li>
+        <% } %>
+   </ul>
+     </div>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+ 
+  
+   <script src='javascripts/jquery.min.js'></script>
+   <script src='/socket.io/socket.io.js'></script>
+   <script src='/mysql/mysql.js'></script>
+   <script src='/javascripts/client.js'></script>
+   </body>
+</html>   

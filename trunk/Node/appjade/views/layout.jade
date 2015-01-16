@@ -1,0 +1,100 @@
+doctype html
+html
+  head
+        title jade-mysql-nodejs-sailsjs
+        // Viewport mobile tag for sensible mobile support
+        meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+        block styles
+            link(rel="stylesheet", type="text/css", href="/styles/bootstrap.min.css")
+            link(rel="stylesheet", type="text/css", href="/styles/bootstrap-reset.css")
+            link(rel="stylesheet", type="text/css", href="/styles/font-awesome.css")
+            link(rel="stylesheet", type="text/css", href="/styles/owl.carousel.css")
+            link(rel="stylesheet", type="text/css", href="/styles/slidebars.css")
+            link(rel="stylesheet", type="text/css", href="/styles/style.css")
+            link(rel="stylesheet", type="text/css", href="/styles/style-responsive.css")
+            link(rel="stylesheet", type="text/css", href="/styles/table-responsive.css")
+  body
+      section#container
+          //begin header
+          header.header.white-bg
+              .sidebar-toggle-box
+                 .fa.fa-bars.tooltips(data-placement='right', data-original-title='Toggle Navigation')
+              a.logo(href='/')
+                  | Flat
+                  span lab
+              .top-nav
+                  ul.nav.pull-right.top-menu
+                      li
+                        input.form-control.search(type='text', placeholder='Search')
+                      li.dropdown
+                          a.dropdown-toggle(data-toggle="dropdown",href="#")
+                            img(alt,src="/images/avatar1_small.jpg")
+                            span.username  Admin
+                            b.caret
+                          ul.dropdown-menu.extended.logout
+                                .log-arrow-up
+                                li
+                                    a(href="#")
+                                        i.fa.fa-suitcase
+                                        | Profile
+                                li
+                                    a(href="#")
+                                        i.fa.fa-cog
+                                        | Settings
+                                li
+                                    a(href="#")
+                                        i.fa.fa-bell-o
+                                        | Notification
+                                li
+                                    a(href="#")
+                                        i.fa.fa-key
+                                        | Log Out
+          //end header
+          // begin aside
+          aside
+              #sidebar.nav-collapse(style="overflow:hidden;outline:none;width:211px;",tabindex="5000")
+                  ul#nav-accordion.sidebar-menu
+                        li
+                            a.active(href="/")
+                                i.fa.fa-dashboard
+                                span  Inicio
+                        li.sub-menu.dcjq-parent-li
+                            a.dcjq-parent
+                                i.fa.fa-laptop
+                                span Menu
+                                span.dcjq-icon
+                            ul.sub(style="display:none;")
+                                li
+                                    a(href="/hotel/homepage") Sub menu
+          //end aside
+          //begin content
+          section#main-content
+              section.wrapper.site-min-height
+                block body
+          //end content
+          //begin footer
+          footer.site-footer
+              .text-center 2014 AMC
+                  a.go-top(href="#")
+                        i.fa.fa-angle-up
+          // end footer
+      #ascrail2000.nicescroll-rails(style='width: 3px; z-index: auto; cursor: default; position: fixed; height: 667px; opacity: 0; background: rgb(64, 64, 64);')
+           div(style='position: relative; top: 0px; float: right; width: 3px; height: 562px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color: rgb(232, 64, 63); background-clip: padding-box;')
+      #ascrail2000-hr.nicescroll-rails(style='height: 3px; z-index: auto; position: fixed; cursor: default; display: none; width: 207px; opacity: 0; background: rgb(64, 64, 64);')
+          div(style='position: relative; top: 0px; height: 3px; width: 210px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color: rgb(232, 64, 63); background-clip: padding-box;')
+      #ascrail2001.nicescroll-rails(style='width: 6px; z-index: 1000; cursor: default; position: fixed; top: 0px; height: 100%; right: 0px; opacity: 0; background: rgb(64, 64, 64);')
+          div(style='position: relative; top: 0px; float: right; width: 6px; height: 221px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color: rgb(232, 64, 63); background-clip: padding-box;')
+      #ascrail2001-hr.nicescroll-rails(style='height: 6px; z-index: 1000; position: fixed; left: 0px; width: 100%; bottom: 0px; cursor: default; display: none; opacity: 0; background: rgb(64, 64, 64);')
+          div(style='position: relative; top: 0px; height: 6px; width: 1366px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color: rgb(232, 64, 63); background-clip: padding-box;')
+
+      block script
+            script(src="/js/dependencies/sails.io.js")
+            script(src="/js/dependencies/jquery.js")
+            script(src="/js/dependencies/jquery.nicescroll.js")
+            script(src="/js/dependencies/jquery.scrollTo.min.js")
+            script(src="/js/dependencies/bootstrap.min.js")
+            script(src="/js/dependencies/jquery.customSelect.min.js")
+            script(src="/js/dependencies/jquery.dcjqaccordion.2.7.js")
+            script(src="/js/dependencies/respond.min.js")
+            script(src="/js/dependencies/slidebars.min.js")
+            script(src="/js/common-scripts.js")
